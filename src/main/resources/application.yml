@@ -19,7 +19,7 @@ logging:
     org.springframework.cloud.gateway: DEBUG
 
 common:
-  front: http://localhost:3000/, https://sgiufape.vercel.app/
+  front: http://localhost:3000,https://sgiufape.vercel.app,https://lmtsteste20.ufape.edu.br
 spring:
   application:
     name: sgu-gateway-service
@@ -32,19 +32,27 @@ spring:
           jwk-set-uri: http://localhost:8080/realms/sgu-ufape/protocol/openid-connect/certs
   cloud:
     gateway:
-      routes:
-        - id: sgu-auth-service
-          uri: lb://sgu-auth-service
-          predicates:
-            - Path=/auth/**
-          filters:
-            - StripPrefix=1
-        - id: sgu-prae-service
-          uri: lb://sgu-prae-service
-          predicates:
-            - Path=/prae/**
-          filters:
-            - StripPrefix=1
+      server:
+        webflux:
+          routes:
+            - id: sgu-auth-service
+              uri: lb://sgu-auth-service
+              predicates:
+                - Path=/auth/**
+              filters:
+                - StripPrefix=1
+            - id: sgu-prae-service
+              uri: lb://sgu-prae-service
+              predicates:
+                - Path=/prae/**
+              filters:
+                - StripPrefix=1
+            - id: sgu-pdi-service
+              uri: lb://sgu-pdi-service
+              predicates:
+                - Path=/pdi/**
+              filters:
+                - StripPrefix=1
 
 ---
 spring:
