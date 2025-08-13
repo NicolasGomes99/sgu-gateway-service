@@ -53,6 +53,12 @@ spring:
                 - Path=/pdi/**
               filters:
                 - StripPrefix=1
+            - id: sgu-editais-service
+              uri: lb://sgu-editais-service
+              predicates:
+                - Path=/editais/**
+              filters:
+                - StripPrefix=1
 
 ---
 spring:
